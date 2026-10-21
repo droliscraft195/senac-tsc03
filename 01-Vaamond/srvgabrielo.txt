@@ -1,0 +1,1198 @@
+#001_Qual comando distribuição GNU/Liux estou usando?
+cat -n /etc/os-release
+
+     1  PRETTY_NAME="Ubuntu 26.04.1 LTS"
+     2  NAME="Ubuntu"
+     3  VERSION_ID="26.04"
+     4  VERSION="26.04.1 LTS (Resolute Raccoon)"
+     5  VERSION_CODENAME=resolute
+     6  ID=ubuntu
+     7  ID_LIKE=debian
+     8  HOME_URL="https://www.ubuntu.com/"
+     9  SUPPORT_URL="https://help.ubuntu.com/"
+    10  BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+    11  PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+    12  UBUNTU_CODENAME=resolute
+    13  LOGO=ubuntu-logo
+
+-----------------------------------------------------------------------------------------
+
+#002_Qual a versão do LSB que estou usando?
+lsb_release -s (sudo apt install lsb)
+cat -n etc/lsb-release
+
+    Distributor ID: Ubuntu
+    Description:    Ubuntu 26.04.1 LTS
+    Release:        26.04
+    Codename:       resolute
+
+-----------------------------------------------------------------------------------------
+
+#003_Qual o nome do meu servidor?
+hostnamectl
+
+    Static hostname: srvgabrielo
+    Icon name: computer-vm
+    Chassis: vm 🖴
+    Machine ID: cc5485d7ec6944fd890bc09da92e1c06
+    Boot ID: b6c597cd30884768b1365d59804f4d93
+    Virtualization: oracle
+    Operating System: Ubuntu 26.04.1 LTS
+    Kernel: Linux 7.0.0-38-generic
+    Architecture: x86-64
+    Hardware Vendor: innotek GmbH
+    Hardware Model: VirtualBox
+    Hardware Version: 1.2
+    Firmware Version: VirtualBox
+    Firmware Date: Fri 2006-12-01
+    Firmware Age: 19y 10month 2w 6d
+
+-----------------------------------------------------------------------------------------
+
+#004_Qual versão do Karnel estou usando
+uname -a
+
+Linux srvgabrielo 7.0.0-38-generic #38-Ubuntu SMP PREEMPT_DYNAMIC Fri Sep  4 09:10:14 UTC 2026 x86_64 GNU/Linux
+
+-----------------------------------------------------------------------------------------
+
+#005_Qual a data e horário atual do servidor?
+timedatectl
+           Local time: Wed 2026-10-21 17:49:32 UTC
+           Universal time: Wed 2026-10-21 17:49:32 UTC
+           RTC time: Wed 2026-10-21 17:45:42
+           Time zone: Etc/UTC (UTC, +0000)
+           System clock synchronized: yes
+           NTP service: active
+           RTC in local TZ: no
+
+-----------------------------------------------------------------------------------------
+
+#006_Informaçoes detalhadas dos Endereços IP (IPv4/IPv6)
+netplan
+
+     Online state: online
+    DNS Addresses: 127.0.0.53 (stub)
+       DNS Search: senac.br
+
+●  1: lo ethernet UNKNOWN/UP (unmanaged)
+      MAC Address: 00:00:00:00:00:00
+        Addresses: 127.0.0.1/8
+                   ::1/128
+
+●  2: enp0s3 ethernet UP (networkd: enp0s3)
+      MAC Address: 08:00:27:7f:f4:22 (Intel Corporation)
+        Addresses: 10.24.69.215/24
+                   fe80::a00:27ff:fe7f:f422/64 (link)
+    DNS Addresses: 8.8.8.8
+                   8.8.4.4
+       DNS Search: senac.br
+           Routes: default via 10.24.69.1 (static)
+                   10.24.69.0/24 from 10.24.69.215 (link)
+                   fe80::/64 metric 256
+
+
+resolvectl
+         Global
+         Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
+         resolv.conf mode: stub
+
+         Link 2 (enp0s3)
+            Current Scopes: DNS
+            Protocols: +DefaultRoute -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
+            Current DNS Server: 8.8.4.4
+            DNS Servers: 8.8.8.8 8.8.4.4
+            DNS Domain: senac.br
+            Default Route: yes
+
+-----------------------------------------------------------------------------------------
+
+#07_Informações detalhadas dos Hard Disk (HD), Partições e utilizando dos Discos?
+ sudo fdisk -l
+
+Disk /dev/loop0: 66.8 MiB, 70049792 bytes, 136816 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop1: 1.51 MiB, 1581056 bytes, 3088 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop2: 1.51 MiB, 1581056 bytes, 3088 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop3: 50.1 MiB, 52535296 bytes, 102608 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/sda: 50 GiB, 53687091200 bytes, 104857600 sectors
+Disk model: VBOX HARDDISK
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: 00862140-D000-4D52-93A6-EA4E77BECF8A
+
+Device       Start       End   Sectors Size Type
+/dev/sda1     2048      4095      2048   1M BIOS boot
+/dev/sda2     4096   4198399   4194304   2G Linux filesystem
+/dev/sda3  4198400 104855551 100657152  48G Linux filesystem
+
+
+Disk /dev/mapper/ubuntu--vg-ubuntu--lv: 24 GiB, 25765609472 bytes, 50323456 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+-----------------------------------------------------------------------------------------
+
+#08_ Informações detalhadas da Memória RAM do servidor?
+
+cat /proc/meminfo
+
+MemTotal:        3480328 kB
+MemFree:         2763668 kB
+MemAvailable:    2987084 kB
+Buffers:           33200 kB
+Cached:           389868 kB
+SwapCached:            0 kB
+Active:           428056 kB
+Inactive:          83424 kB
+Active(anon):      96884 kB
+Inactive(anon):        0 kB
+Active(file):     331172 kB
+Inactive(file):    83424 kB
+Unevictable:        9612 kB
+Mlocked:            9612 kB
+SwapTotal:       4003836 kB
+SwapFree:        4003836 kB
+Zswap:                 0 kB
+Zswapped:              0 kB
+Dirty:                 0 kB
+Writeback:             0 kB
+AnonPages:         98124 kB
+Mapped:           122624 kB
+Shmem:              1056 kB
+KReclaimable:      20128 kB
+Slab:              66624 kB
+SReclaimable:      20128 kB
+SUnreclaim:        46496 kB
+KernelStack:        2512 kB
+PageTables:         3696 kB
+SecPageTables:         0 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     5744000 kB
+Committed_AS:     524656 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:       21136 kB
+VmallocChunk:          0 kB
+Percpu:             1072 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:         0 kB
+ShmemHugePages:        0 kB
+ShmemPmdMapped:        0 kB
+FileHugePages:     12288 kB
+FilePmdMapped:         0 kB
+CmaTotal:              0 kB
+CmaFree:         1540152 kB
+Unaccepted:            0 kB
+Balloon:               0 kB
+GPUActive:         19232 kB
+GPUReclaim:            0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+Hugetlb:               0 kB
+DirectMap4k:      124864 kB
+DirectMap2M:     4069376 kB
+
+-----------------------------------------------------------------------------------------
+
+#09_ Informações detalhadas do Processador do servidor?
+
+lscpu
+
+Architecture:                x86_64
+  CPU op-mode(s):            32-bit, 64-bit
+  Address sizes:             39 bits physical, 48 bits virtual
+  Byte Order:                Little Endian
+CPU(s):                      2
+  On-line CPU(s) list:       0,1
+Vendor ID:                   GenuineIntel
+  Model name:                Intel(R) Core(TM) i5-9500 CPU @ 3.00GHz
+    CPU family:              6
+    Model:                   158
+    Thread(s) per core:      1
+    Core(s) per socket:      2
+    Socket(s):               1
+    Stepping:                10
+    BogoMIPS:                6000.01
+    Flags:                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mm
+                             x fxsr sse sse2 ht syscall nx rdtscp lm constant_tsc rep_good nopl xtopology nonst
+                             op_tsc cpuid tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 movbe
+                             popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch pti fsgsbase
+                              bmi1 avx2 bmi2 invpcid rdseed adx clflushopt arat md_clear flush_l1d arch_capabil
+                             ities
+Virtualization features:
+  Hypervisor vendor:         KVM
+  Virtualization type:       full
+Caches (sum of all):
+  L1d:                       64 KiB (2 instances)
+  L1i:                       64 KiB (2 instances)
+  L2:                        512 KiB (2 instances)
+  L3:                        18 MiB (2 instances)
+NUMA:
+  NUMA node(s):              1
+  NUMA node0 CPU(s):         0,1
+Vulnerabilities:
+  Gather data sampling:      Not affected
+  Ghostwrite:                Not affected
+  Indirect target selection: Mitigation; Aligned branch/return thunks
+  Itlb multihit:             Not affected
+  L1tf:                      Mitigation; PTE Inversion
+  Mds:                       Mitigation; Clear CPU buffers; SMT Host state unknown
+  Meltdown:                  Mitigation; PTI
+  Mmio stale data:           Mitigation; Clear CPU buffers; SMT Host state unknown
+  Old microcode:             Not affected
+  Reg file data sampling:    Not affected
+  Retbleed:                  Vulnerable
+  Spec rstack overflow:      Not affected
+  Spec store bypass:         Vulnerable
+  Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+  Spectre v2:                Mitigation; Retpolines; STIBP disabled; RSB filling; PBRSB-eIBRS Not affected; BHI
+                              Retpoline
+  Srbds:                     Unknown: Dependent on hypervisor status
+  Tsa:                       Not affected
+  Tsx async abort:           Not affected
+  Vmscape:                   Not affected
+
+-----------------------------------------------------------------------------------------
+
+#10_ Levantamento de todos os softwares e versões instaladas no servidor?
+
+dpkg-query -W -f='${binary:Package}\t${Version}\t${Architecture}\t${Status}\n' | column -t | less
+
+3cpio                                    0.14.0-1ubuntu1                             amd64  install    ok  installed
+adduser                                  3.153ubuntu1                                all    install    ok  installed
+amd64-microcode                          3.20251202.1ubuntu2                         amd64  install    ok  installed
+apparmor                                 5.0.2-0ubuntu1~26.04.1                      amd64  install    ok  installed
+apport                                   2.34.1-0ubuntu0.1                           all    install    ok  installed
+apport-core-dump-handler                 2.34.1-0ubuntu0.1                           all    install    ok  installed
+apport-symptoms                          0.25build1                                  all    install    ok  installed
+appstream                                1.1.2-1                                     amd64  install    ok  installed
+apt                                      3.2.0                                       amd64  install    ok  installed
+base-files                               14ubuntu6.2                                 amd64  install    ok  installed
+base-passwd                              3.6.8                                       amd64  install    ok  installed
+bash                                     5.3-2ubuntu1                                amd64  install    ok  installed
+bash-completion                          1:2.16.0-8build1                            all    install    ok  installed
+bc                                       1.07.1-4build1                              amd64  install    ok  installed
+bcache-tools                             1.0.8-5ubuntu1                              amd64  install    ok  installed
+bind9-dnsutils                           1:9.20.24-1ubuntu0.4                        amd64  install    ok  installed
+bind9-host                               1:9.20.24-1ubuntu0.4                        amd64  install    ok  installed
+bind9-libs:amd64                         1:9.20.24-1ubuntu0.4                        amd64  install    ok  installed
+binutils                                 2.46-3ubuntu2                               amd64  install    ok  installed
+binutils-common:amd64                    2.46-3ubuntu2                               amd64  install    ok  installed
+binutils-x86-64-linux-gnu                2.46-3ubuntu2                               amd64  install    ok  installed
+bolt                                     0.9.10-1                                    amd64  install    ok  installed
+bpfcc-tools                              0.35.0+ds-1ubuntu2                          all    install    ok  installed
+bpftool                                  7.7.0+7.0.0-38.38                           amd64  install    ok  installed
+bpftrace                                 0.25.0-1ubuntu1                             amd64  install    ok  installed
+bsdextrautils                            2.41.3-3ubuntu2.2                           amd64  install    ok  installed
+bsdutils                                 1:2.41.3-3ubuntu2.2                         amd64  install    ok  installed
+btrfs-progs                              6.17.1-1build1                              amd64  install    ok  installed
+busybox-initramfs                        1:1.37.0-7ubuntu1                           amd64  install    ok  installed
+busybox-static                           1:1.37.0-7ubuntu1                           amd64  install    ok  installed
+ca-certificates                          20260601~26.04.1                            all    install    ok  installed
+chrony                                   4.8-2ubuntu1                                amd64  install    ok  installed
+cloud-guest-utils                        0.33-1build1                                all    install    ok  installed
+cloud-init                               26.1-0ubuntu3~26.04.1                       all    install    ok  installed
+cloud-init-base                          26.1-0ubuntu3~26.04.1                       all    install    ok  installed
+cloud-initramfs-copymods                 0.58ubuntu                                  all    install    ok  installed
+cloud-initramfs-dyn-netconf              0.58ubuntu                                  all    install    ok  installed
+command-not-found                        23.04.0build1                               all    install    ok  installed
+console-setup                            1.237ubuntu3.1                              all    install    ok  installed
+console-setup-linux                      1.237ubuntu3.1                              all    install    ok  installed
+coreutils                                9.5-1ubuntu2+0.0.0~ubuntu25                 all    install    ok  installed
+coreutils-from-uutils                    0.0.0~ubuntu25                              all    install    ok  installed
+cpio                                     2.15+dfsg-2.1ubuntu0.1                      amd64  install    ok  installed
+crash                                    9.0.1+~16.3-1ubuntu1                        amd64  install    ok  installed
+cron                                     3.0pl1-200ubuntu1                           amd64  install    ok  installed
+cron-daemon-common                       3.0pl1-200ubuntu1                           all    install    ok  installed
+cryptsetup                               2:2.8.4-1ubuntu4                            amd64  install    ok  installed
+cryptsetup-bin                           2:2.8.4-1ubuntu4                            amd64  install    ok  installed
+curl                                     8.18.0-1ubuntu2.8                           amd64  install    ok  installed
+dash                                     0.5.12-12ubuntu3                            amd64  install    ok  installed
+dbus                                     1.16.2-2ubuntu4                             amd64  install    ok  installed
+dbus-bin                                 1.16.2-2ubuntu4                             amd64  install    ok  installed
+dbus-daemon                              1.16.2-2ubuntu4                             amd64  install    ok  installed
+dbus-session-bus-common                  1.16.2-2ubuntu4                             all    install    ok  installed
+dbus-system-bus-common                   1.16.2-2ubuntu4                             all    install    ok  installed
+dbus-user-session                        1.16.2-2ubuntu4                             amd64  install    ok  installed
+debconf                                  1.5.92                                      all    install    ok  installed
+debconf-i18n                             1.5.92                                      all    install    ok  installed
+diffutils                                1:3.12-1ubuntu0.1                           amd64  install    ok  installed
+dirmngr                                  2.4.8-4ubuntu3.1                            amd64  install    ok  installed
+distro-info                              1.15                                        amd64  install    ok  installed
+distro-info-data                         0.72-0ubuntu0.26.04.1                       all    install    ok  installed
+dmeventd                                 2:1.02.205-2ubuntu3                         amd64  install    ok  installed
+dmidecode                                3.6-2ubuntu1                                amd64  install    ok  installed
+dmsetup                                  2:1.02.205-2ubuntu3                         amd64  install    ok  installed
+dosfstools                               4.2-1.2build1                               amd64  install    ok  installed
+dpkg                                     1.23.7ubuntu1                               amd64  install    ok  installed
+dracut                                   110-11ubuntu0.1                             all    install    ok  installed
+dracut-core                              110-11ubuntu0.1                             amd64  install    ok  installed
+dracut-install                           110-11ubuntu0.1                             amd64  install    ok  installed
+dracut-network                           110-11ubuntu0.1                             all    install    ok  installed
+e2fsprogs                                1.47.2-3ubuntu4                             amd64  install    ok  installed
+eatmydata                                131-2build1                                 all    install    ok  installed
+ed                                       1.22.4-1                                    amd64  install    ok  installed
+eject                                    2.41.3-3ubuntu2.2                           amd64  install    ok  installed
+ethtool                                  1:6.19-1                                    amd64  install    ok  installed
+exfatprogs                               1.3.2-1                                     amd64  install    ok  installed
+fdisk                                    2.41.3-3ubuntu2.2                           amd64  install    ok  installed
+file                                     1:5.46-5build2                              amd64  install    ok  installed
+finalrd                                  9build2                                     all    install    ok  installed
+findutils                                4.10.0-3build2                              amd64  install    ok  installed
+firmware-sof-signed                      2025.12.2-1                                 all    install    ok  installed
+fonts-ubuntu-console                     0.869+git20240321-0ubuntu2                  all    install    ok  installed
+friendly-recovery                        0.2.42build1                                all    install    ok  installed
+ftp                                      20260211-1                                  all    install    ok  installed
+fuse3                                    3.18.2-1                                    amd64  install    ok  installed
+fwupd                                    2.1.1-1ubuntu3.1                            amd64  install    ok  installed
+fwupd-signed                             1.55+1.7-1                                  amd64  install    ok  installed
+gawk                                     1:5.3.2-1ubuntu1.1                          amd64  install    ok  installed
+gcc-16-base:amd64                        16-20260322-1ubuntu1                        amd64  install    ok  installed
+gdisk                                    1.0.10-2build1                              amd64  install    ok  installed
+gettext-base                             0.23.2-1                                    amd64  install    ok  installed
+gir1.2-girepository-3.0:amd64            2.88.0-1ubuntu0.1                           amd64  install    ok  installed
+gir1.2-glib-2.0:amd64                    2.88.0-1ubuntu0.1                           amd64  install    ok  installed
+gir1.2-packagekitglib-1.0                1.3.4-3ubuntu1.2                            amd64  install    ok  installed
+git                                      1:2.53.0-1ubuntu1                           amd64  install    ok  installed
+git-man                                  1:2.53.0-1ubuntu1                           all    install    ok  installed
+gnu-coreutils                            9.7-3ubuntu2.1                              amd64  install    ok  installed
+gnupg                                    2.4.8-4ubuntu3.1                            all    install    ok  installed
+gnupg-l10n                               2.4.8-4ubuntu3.1                            all    install    ok  installed
+gnupg-utils                              2.4.8-4ubuntu3.1                            amd64  install    ok  installed
+gpg                                      2.4.8-4ubuntu3.1                            amd64  install    ok  installed
+gpg-agent                                2.4.8-4ubuntu3.1                            amd64  install    ok  installed
+gpg-wks-client                           2.4.8-4ubuntu3.1                            amd64  install    ok  installed
+gpgconf                                  2.4.8-4ubuntu3.1                            amd64  install    ok  installed
+gpgsm                                    2.4.8-4ubuntu3.1                            amd64  install    ok  installed
+gpgv                                     2.4.8-4ubuntu3.1                            amd64  install    ok  installed
+grep                                     3.12-1                                      amd64  install    ok  installed
+groff-base                               1.23.0-10                                   amd64  install    ok  installed
+grub-gfxpayload-lists                    0.7build3                                   amd64  install    ok  installed
+grub-pc                                  2.14-2ubuntu2.1                             amd64  install    ok  installed
+grub-pc-bin                              2.14-2ubuntu2.1                             amd64  install    ok  installed
+grub2-common                             2.14-2ubuntu2.1                             amd64  install    ok  installed
+gzip                                     1.14-1~exp2ubuntu1.1                        amd64  install    ok  installed
+hdparm                                   9.65+ds-1.1build1                           amd64  install    ok  installed
+hostname                                 3.25build1                                  amd64  install    ok  installed
+htop                                     3.4.1-5build2                               amd64  install    ok  installed
+hwctl                                    0.11.0-0ubuntu1                             amd64  install    ok  installed
+hwdata                                   0.394-1build1                               all    install    ok  installed
+ibverbs-providers:amd64                  61.0-2ubuntu3                               amd64  install    ok  installed
+ieee-data                                20240722build1                              all    install    ok  installed
+inetutils-telnet                         2:2.7-2ubuntu1.1                            amd64  install    ok  installed
+info                                     7.2-5ubuntu2                                amd64  install    ok  installed
+init                                     1.69                                        amd64  install    ok  installed
+init-system-helpers                      1.69                                        all    install    ok  installed
+initramfs-tools-bin                      0.151ubuntu1                                amd64  install    ok  installed
+initramfs-tools-core                     0.151ubuntu1                                all    install    ok  installed
+install-info                             7.2-5ubuntu2                                amd64  install    ok  installed
+intel-microcode                          3.20260210.1ubuntu2                         amd64  install    ok  installed
+iproute2                                 6.19.0-1ubuntu1.1                           amd64  install    ok  installed
+iptables                                 1.8.11-2ubuntu3                             amd64  install    ok  installed
+iputils-ping                             3:20250605-1ubuntu1                         amd64  install    ok  installed
+iputils-tracepath                        3:20250605-1ubuntu1                         amd64  install    ok  installed
+iso-codes                                4.20.1-1                                    all    install    ok  installed
+iucode-tool                              2.3.1-3build2                               amd64  install    ok  installed
+jq                                       1.8.1-4ubuntu2                              amd64  install    ok  installed
+kbd                                      2.7.1-2ubuntu2                              amd64  install    ok  installed
+kdump-tools                              1:1.10.7ubuntu3                             amd64  install    ok  installed
+kexec-tools                              1:2.0.32-3ubuntu1                           amd64  install    ok  installed
+keyboard-configuration                   1.237ubuntu3.1                              all    install    ok  installed
+klibc-utils                              2.0.14-1ubuntu2                             amd64  install    ok  installed
+kmod                                     34.2-2ubuntu2                               amd64  install    ok  installed
+kpartx                                   0.14.3-2ubuntu1                             amd64  install    ok  installed
+krb5-locales                             1.22.1-2ubuntu4.1                           all    install    ok  installed
+landscape-common                         26.02.2-0ubuntu1                            amd64  install    ok  installed
+less                                     668-1build1                                 amd64  install    ok  installed
+libacl1:amd64                            2.3.2-2                                     amd64  install    ok  installed
+libaio1t64:amd64                         0.3.113-8build1                             amd64  install    ok  installed
+libapparmor1:amd64                       5.0.2-0ubuntu1~26.04.1                      amd64  install    ok  installed
+libappstream5:amd64                      1.1.2-1                                     amd64  install    ok  installed
+libapt-pkg7.0:amd64                      3.2.0                                       amd64  install    ok  installed
+libassuan9:amd64                         3.0.2-2build1                               amd64  install    ok  installed
+libatasmart4:amd64                       0.19-6                                      amd64  install    ok  installed
+libatomic1:amd64                         16-20260322-1ubuntu1                        amd64  install    ok  installed
+libattr1:amd64                           1:2.5.2-4ubuntu0.1                          amd64  install    ok  installed
+libaudit-common                          1:4.1.2-1ubuntu0.1                          all    install    ok  installed
+libaudit1:amd64                          1:4.1.2-1ubuntu0.1                          amd64  install    ok  installed
+libbinutils:amd64                        2.46-3ubuntu2                               amd64  install    ok  installed
+libblkid1:amd64                          2.41.3-3ubuntu2.2                           amd64  install    ok  installed
+libblockdev-crypto3:amd64                3.4.0-1                                     amd64  install    ok  installed
+libblockdev-fs3:amd64                    3.4.0-1                                     amd64  install    ok  installed
+libblockdev-loop3:amd64                  3.4.0-1                                     amd64  install    ok  installed
+libblockdev-mdraid3:amd64                3.4.0-1                                     amd64  install    ok  installed
+libblockdev-nvme3:amd64                  3.4.0-1                                     amd64  install    ok  installed
+libblockdev-part3:amd64                  3.4.0-1                                     amd64  install    ok  installed
+libblockdev-smart3:amd64                 3.4.0-1                                     amd64  install    ok  installed
+libblockdev-swap3:amd64                  3.4.0-1                                     amd64  install    ok  installed
+libblockdev-utils3:amd64                 3.4.0-1                                     amd64  install    ok  installed
+libblockdev3:amd64                       3.4.0-1                                     amd64  install    ok  installed
+libbpf1:amd64                            1:1.6.3-1ubuntu1                            amd64  install    ok  installed
+libfastjson4:amd64                       1.2304.0-2build1                            amd64  install    ok  installed
+libfdisk1:amd64                          2.41.3-3ubuntu2.2                           amd64  install    ok  installed
+libffi8:amd64                            3.5.2-4                                     amd64  install    ok  installed
+libfido2-1:amd64                         1.16.0-2build1                              amd64  install    ok  installed
+libflashrom1:amd64                       1.6.0-2ubuntu1.1                            amd64  install    ok  installed
+libfreetype6:amd64                       2.14.2+dfsg-1ubuntu0.2                      amd64  install    ok  installed
+libfribidi0:amd64                        1.0.16-5                                    amd64  install    ok  installed
+libmpathpersist0                         0.14.3-2ubuntu1                             amd64  install    ok  installed
+libmpfr6:amd64                           4.2.2-3                                     amd64  install    ok  installed
+libmspack0t64:amd64                      0.11-1.1build2                              amd64  install    ok  installed
+libmultipath0                            0.14.3-2ubuntu1                             amd64  install    ok  installed
+libncurses6:amd64                        6.6+20251231-1                              amd64  install    ok  installed
+libncursesw6:amd64                       6.6+20251231-1                              amd64  install    ok  installed
+libnetfilter-conntrack3:amd64            1.1.1-1                                     amd64  install    ok  installed
+libnetplan1:amd64                        1.2-1ubuntu5.1                              amd64  install    ok  installed
+libnettle8t64:amd64                      3.10.2-1                                    amd64  install    ok  installed
+libnewt0.52:amd64                        0.52.25-1ubuntu3                            amd64  install    ok  installed
+libnfnetlink0:amd64                      1.0.2-3build1                               amd64  install    ok  installed
+libnftables1:amd64                       1.1.6-1                                     amd64  install    ok  installed
+libnftnl11:amd64                         1.3.1-1                                     amd64  install    ok  installed
+libnghttp2-14:amd64                      1.68.0-2ubuntu0.2                           amd64  install    ok  installed
+libnl-3-200:amd64                        3.12.0-2                                    amd64  install    ok  installed
+libnl-genl-3-200:amd64                   3.12.0-2                                    amd64  install    ok  installed
+libnl-route-3-200:amd64                  3.12.0-2                                    amd64  install    ok  installed
+libnpth0t64:amd64                        1.8-3build1                                 amd64  install    ok  installed
+libnspr4:amd64                           2:4.38.2-1ubuntu1                           amd64  install    ok  installed
+libnss-systemd:amd64                     259.5-0ubuntu3.4                            amd64  install    ok  installed
+libnss3:amd64                            2:3.120-1ubuntu2.1                          amd64  install    ok  installed
+libntfs-3g89t64:amd64                    1:2022.10.3-5ubuntu1.1                      amd64  install    ok  installed
+libnuma1:amd64                           2.0.19-1build1                              amd64  install    ok  installed
+libnvme1t64:amd64                        1.16.1-4                                    amd64  install    ok  installed
+libonig5:amd64                           6.9.10-1build1                              amd64  install    ok  installed
+libopeniscsiusr                          2.1.11-3ubuntu3.1                           amd64  install    ok  installed
+libp11-kit0:amd64                        0.26.2-2                                    amd64  install    ok  installed
+libpackagekit-glib2-18:amd64             1.3.4-3ubuntu1.2                            amd64  install    ok  installed
+libpam-cap:amd64                         1:2.75-10ubuntu2                            amd64  install    ok  installed
+libpam-modules:amd64                     1.7.0-5ubuntu3.2                            amd64  install    ok  installed
+libpam-modules-bin                       1.7.0-5ubuntu3.2                            amd64  install    ok  installed
+libpam-runtime                           1.7.0-5ubuntu3.2                            all    install    ok  installed
+libpam-systemd:amd64                     259.5-0ubuntu3.4                            amd64  install    ok  installed
+libpam0g:amd64                           1.7.0-5ubuntu3.2                            amd64  install    ok  installed
+libparted2t64:amd64                      3.6-6                                       amd64  install    ok  installed
+libpcap0.8t64:amd64                      1.10.6-1ubuntu1.1                           amd64  install    ok  installed
+libpci3:amd64                            1:3.14.0-1build2                            amd64  install    ok  installed
+libpcre2-8-0:amd64                       10.46-1build1                               amd64  install    ok  installed
+libperl5.40:amd64                        5.40.1-7ubuntu0.3                           amd64  install    ok  installed
+libpipeline1:amd64                       1.5.8-2                                     amd64  install    ok  installed
+libplist-2.0-4:amd64                     2.7.0+git20250820-1build1                   amd64  install    ok  installed
+libplymouth5:amd64                       24.004.60+git20250831.4a3c171d-0ubuntu8     amd64  install    ok  installed
+libpng16-16t64:amd64                     1.6.57-1ubuntu0.1                           amd64  install    ok  installed
+libpolkit-agent-1-0:amd64                127-2ubuntu1.1                              amd64  install    ok  installed
+libpolkit-gobject-1-0:amd64              127-2ubuntu1.1                              amd64  install    ok  installed
+libpopt0:amd64                           1.19+dfsg-2build1                           amd64  install    ok  installed
+libproc-processtable-perl:amd64          0.637-1                                     amd64  install    ok  installed
+libproc2-0:amd64                         2:4.0.4-9ubuntu1                            amd64  install    ok  installed
+libpsl5t64:amd64                         0.21.2-1.1build2                            amd64  install    ok  installed
+libpython3-stdlib:amd64                  3.14.3-0ubuntu2                             amd64  install    ok  installed
+libpython3.14:amd64                      3.14.4-1ubuntu0.2                           amd64  install    ok  installed
+libpython3.14-minimal:amd64              3.14.4-1ubuntu0.2                           amd64  install    ok  installed
+libpython3.14-stdlib:amd64               3.14.4-1ubuntu0.2                           amd64  install    ok  installed
+libqmi-glib5:amd64                       1.38.0-1                                    amd64  install    ok  installed
+libqmi-proxy                             1.38.0-1                                    amd64  install    ok  installed
+libqmi-utils                             1.38.0-1                                    amd64  install    ok  installed
+libqrtr-glib0:amd64                      1.2.2-2ubuntu1                              amd64  install    ok  installed
+libreadline8t64:amd64                    8.3-4                                       amd64  install    ok  installed
+librtmp1:amd64                           2.4+20151223.gitfa8646d.1-3                 amd64  install    ok  installed
+libsasl2-2:amd64                         2.1.28+dfsg1-9ubuntu3                       amd64  install    ok  installed
+libsasl2-modules:amd64                   2.1.28+dfsg1-9ubuntu3                       amd64  install    ok  installed
+libsasl2-modules-db:amd64                2.1.28+dfsg1-9ubuntu3                       amd64  install    ok  installed
+libseccomp2:amd64                        2.6.0-2ubuntu5                              amd64  install    ok  installed
+libselinux1:amd64                        3.9-4build1                                 amd64  install    ok  installed
+libsemanage-common                       3.9-1build1                                 all    install    ok  installed
+libsemanage2:amd64                       3.9-1build1                                 amd64  install    ok  installed
+libsensors-config                        1:3.6.2-2build1                             all    install    ok  installed
+libsensors5:amd64                        1:3.6.2-2build1                             amd64  install    ok  installed
+libsepol2:amd64                          3.9-2                                       amd64  install    ok  installed
+libsframe3:amd64                         2.46-3ubuntu2                               amd64  install    ok  installed
+libsgutils2-1.48:amd64                   1.48-3ubuntu3.2                             amd64  install    ok  installed
+libslang2:amd64                          2.3.3-5build1                               amd64  install    ok  installed
+libsmartcols1:amd64                      2.41.3-3ubuntu2.2                           amd64  install    ok  installed
+libsnappy1v5:amd64                       1.2.2-2                                     amd64  install    ok  installed
+libsodium23:amd64                        1.0.18-2                                    amd64  install    ok  installed
+libsort-naturally-perl                   1.03-4                                      all    install    ok  installed
+libsqlite3-0:amd64                       3.46.1-9ubuntu0.3                           amd64  install    ok  installed
+libss2:amd64                             1.47.2-3ubuntu4                             amd64  install    ok  installed
+libssh2-1t64:amd64                       1.11.1-1ubuntu0.26.04.4                     amd64  install    ok  installed
+libssl3t64:amd64                         3.5.5-1ubuntu3.7                            amd64  install    ok  installed
+libstdc++6:amd64                         16-20260322-1ubuntu1                        amd64  install    ok  installed
+libstemmer0d:amd64                       3.0.1-1                                     amd64  install    ok  installed
+libsystemd-shared:amd64                  259.5-0ubuntu3.4                            amd64  install    ok  installed
+libsystemd0:amd64                        259.5-0ubuntu3.4                            amd64  install    ok  installed
+libtasn1-6:amd64                         4.21.0-2                                    amd64  install    ok  installed
+libtcl8.6:amd64                          8.6.17+dfsg-1build1                         amd64  install    ok  installed
+libterm-readkey-perl                     2.38-2build5                                amd64  install    ok  installed
+libtext-charwidth-perl:amd64             0.04-11build4                               amd64  install    ok  installed
+libtext-iconv-perl:amd64                 1.7-8.1                                     amd64  install    ok  installed
+libtext-wrapi18n-perl                    0.06-10                                     all    install    ok  installed
+libtinfo6:amd64                          6.6+20251231-1                              amd64  install    ok  installed
+libtirpc-common                          1.3.7-0.1                                   all    install    ok  installed
+libtirpc3t64:amd64                       1.3.7-0.1                                   amd64  install    ok  installed
+libtraceevent1:amd64                     1:1.8.7-1                                   amd64  install    ok  installed
+libtraceevent1-plugin:amd64              1:1.8.7-1                                   amd64  install    ok  installed
+libtracefs1:amd64                        1.8.2-1ubuntu1                              amd64  install    ok  installed
+libtss2-esys-3.0.2-0t64:amd64            4.1.3-6                                     amd64  install    ok  installed
+libtss2-mu-4.0.1-0t64:amd64              4.1.3-6                                     amd64  install    ok  installed
+libtss2-sys1t64:amd64                    4.1.3-6                                     amd64  install    ok  installed
+libtss2-tcti-cmd0t64:amd64               4.1.3-6                                     amd64  install    ok  installed
+libtss2-tcti-device0t64:amd64            4.1.3-6                                     amd64  install    ok  installed
+libtss2-tcti-mssim0t64:amd64             4.1.3-6                                     amd64  install    ok  installed
+libtss2-tcti-swtpm0t64:amd64             4.1.3-6                                     amd64  install    ok  installed
+libuchardet0:amd64                       0.0.8-2                                     amd64  install    ok  installed
+libudev1:amd64                           259.5-0ubuntu3.4                            amd64  install    ok  installed
+libudisks2-0:amd64                       2.10.91-1ubuntu2.1                          amd64  install    ok  installed
+libunistring5:amd64                      1.3-2build1                                 amd64  install    ok  installed
+libunwind8:amd64                         1.8.3-0ubuntu1                              amd64  install    ok  installed
+libupower-glib3:amd64                    1.91.1-1                                    amd64  install    ok  installed
+liburcu8t64:amd64                        0.15.6-1                                    amd64  install    ok  installed
+libusb-1.0-0:amd64                       2:1.0.29-2build1                            amd64  install    ok  installed
+libusbmuxd-2.0-7:amd64                   2.1.1-1                                     amd64  install    ok  installed
+libuuid1:amd64                           2.41.3-3ubuntu2.2                           amd64  install    ok  installed
+libuv1t64:amd64                          1.51.0-2ubuntu1                             amd64  install    ok  installed
+libvolume-key1:amd64                     0.3.12-10build2                             amd64  install    ok  installed
+libwrap0:amd64                           7.6.q-36build2                              amd64  install    ok  installed
+libx11-6:amd64                           2:1.8.13-1ubuntu0.1                         amd64  install    ok  installed
+libx11-data                              2:1.8.13-1ubuntu0.1                         all    install    ok  installed
+libxau6:amd64                            1:1.0.11-1build2                            amd64  install    ok  installed
+libxcb1:amd64                            1.17.0-2ubuntu1                             amd64  install    ok  installed
+libxdmcp6:amd64                          1:1.1.5-2                                   amd64  install    ok  installed
+libxext6:amd64                           2:1.3.4-1build3                             amd64  install    ok  installed
+libxkbcommon0:amd64                      1.13.1-1                                    amd64  install    ok  installed
+libxml2-16:amd64                         2.15.2+dfsg-0.1ubuntu0.3                    amd64  install    ok  installed
+libxmlb2:amd64                           0.3.24-2                                    amd64  install    ok  installed
+libxmlsec1-1:amd64                       1.3.9-1                                     amd64  install    ok  installed
+libxmlsec1-openssl1:amd64                1.3.9-1                                     amd64  install    ok  installed
+libxmuu1:amd64                           2:1.1.3-4                                   amd64  install    ok  installed
+libxslt1.1:amd64                         1.1.45-0.1                                  amd64  install    ok  installed
+libxtables12:amd64                       1.8.11-2ubuntu3                             amd64  install    ok  installed
+libxxhash0:amd64                         0.8.3-2build1                               amd64  install    ok  installed
+libyaml-0-2:amd64                        0.2.5-2build3                               amd64  install    ok  installed
+libzstd1:amd64                           1.5.7+dfsg-3                                amd64  install    ok  installed
+linux-base                               4.15ubuntu5                                 all    install    ok  installed
+linux-firmware                           20260319.git217ca6e4.1ubuntu                all    install    ok  installed
+linux-firmware-amd-graphics              20260319.git217ca6e4-0ubuntu3.1             all    install    ok  installed
+linux-firmware-amd-misc                  20260319.git217ca6e4-0ubuntu1.1             all    install    ok  installed
+linux-firmware-broadcom-wireless         20260319.git217ca6e4-0ubuntu1.1             all    install    ok  installed
+linux-firmware-intel-graphics            20260319.git217ca6e4-0ubuntu2.1             all    install    ok  installed
+linux-firmware-intel-misc                20260319.git217ca6e4-0ubuntu1.2             all    install    ok  installed
+linux-firmware-intel-wireless            20260319.git217ca6e4-0ubuntu2.1             all    install    ok  installed
+linux-firmware-marvell-prestera          20260319.git217ca6e4-0ubuntu1.2             all    install    ok  installed
+linux-firmware-marvell-wireless          20260319.git217ca6e4-0ubuntu1.1             all    install    ok  installed
+linux-firmware-mediatek                  20260319.git217ca6e4-0ubuntu1.2             all    install    ok  installed
+linux-firmware-mellanox-spectrum         20260319.git217ca6e4-0ubuntu1.1             all    install    ok  installed
+linux-firmware-misc                      20260319.git217ca6e4-0ubuntu2.2             all    install    ok  installed
+linux-firmware-netronome                 20260319.git217ca6e4-0ubuntu1.1             all    install    ok  installed
+linux-firmware-nvidia-graphics           20260319.git217ca6e4-0ubuntu1.1             all    install    ok  installed
+linux-firmware-qlogic                    20260319.git217ca6e4-0ubuntu1.1             all    install    ok  installed
+linux-firmware-qualcomm-graphics         20260319.git217ca6e4-0ubuntu1.1             all    install    ok  installed
+linux-firmware-qualcomm-misc             20260319.git217ca6e4-0ubuntu2.1             all    install    ok  installed
+linux-firmware-qualcomm-wireless         20260319.git217ca6e4-0ubuntu1.2             all    install    ok  installed
+linux-firmware-realtek                   20260319.git217ca6e4-0ubuntu1.2             all    install    ok  installed
+linux-generic                            7.0.0-38.38                                 amd64  install    ok  installed
+linux-headers-7.0.0-38                   7.0.0-38.38                                 all    install    ok  installed
+linux-headers-7.0.0-38-generic           7.0.0-38.38                                 amd64  install    ok  installed
+linux-headers-generic                    7.0.0-38.38                                 amd64  install    ok  installed
+linux-image-7.0.0-38-generic             7.0.0-38.38                                 amd64  install    ok  installed
+linux-image-generic                      7.0.0-38.38                                 amd64  install    ok  installed
+linux-image-unsigned-7.0.0-30-generic    7.0.0-30.30                                 amd64  deinstall  ok  config-files
+linux-libc-dev:amd64                     7.0.0-38.38                                 amd64  install    ok  installed
+linux-main-modules-zfs-7.0.0-30-generic  7.0.0-30.30                                 amd64  deinstall  ok  config-files
+linux-main-modules-zfs-7.0.0-38-generic  7.0.0-38.38                                 amd64  install    ok  installed
+linux-modules-7.0.0-30-generic           7.0.0-30.30                                 amd64  deinstall  ok  config-files
+linux-modules-7.0.0-38-generic           7.0.0-38.38                                 amd64  install    ok  installed
+linux-perf                               7.0.0-38.38                                 amd64  install    ok  installed
+linux-sysctl-defaults                    4.15ubuntu5                                 all    install    ok  installed
+linux-tools-7.0.0-38                     7.0.0-38.38                                 amd64  install    ok  installed
+linux-tools-7.0.0-38-generic             7.0.0-38.38                                 amd64  install    ok  installed
+linux-tools-common                       7.0.0-38.38                                 all    install    ok  installed
+locales                                  2.43-2ubuntu2.4                             all    install    ok  installed
+login                                    1:4.16.0-2+really2.41.3-3ubuntu2.2          amd64  install    ok  installed
+login.defs                               1:4.17.4-2ubuntu3                           all    install    ok  installed
+logrotate                                3.22.0-1build1                              amd64  install    ok  installed
+logsave                                  1.47.2-3ubuntu4                             amd64  install    ok  installed
+lsb-base                                 11.6build1                                  all    install    ok  installed
+lsb-release                              12.1-2build1                                all    install    ok  installed
+lshw                                     02.19.git.2021.06.19.996aaad9c7-2.1ubuntu3  amd64  install    ok  installed
+lsof                                     4.99.4+dfsg-2build2                         amd64  install    ok  installed
+lvm2                                     2.03.31-2ubuntu3                            amd64  install    ok  installed
+lxd-agent-loader                         0.13ubuntu0                                 all    install    ok  installed
+lxd-installer                            14ubuntu0                                   all    install    ok  installed
+makedumpfile                             1:1.7.7-1                                   amd64  install    ok  installed
+man-db                                   2.13.1-1build1                              amd64  install    ok  installed
+manpages                                 6.17-1                                      all    install    ok  installed
+manpages-dev                             6.17-1                                      all    install    ok  installed
+mawk                                     1.3.4.20260129-1                            amd64  install    ok  installed
+mdadm                                    4.5-5ubuntu1.1                              amd64  install    ok  installed
+media-types                              14.0.0build1                                all    install    ok  installed
+modemmanager                             1.25.95-1ubuntu1                            amd64  install    ok  installed
+mokutil                                  0.7.2-2                                     amd64  install    ok  installed
+motd-news-config                         14ubuntu6.2                                 all    install    ok  installed
+mount                                    2.41.3-3ubuntu2.2                           amd64  install    ok  installed
+mtr-tiny                                 0.95-1.1ubuntu2                             amd64  install    ok  installed
+multipath-tools                          0.14.3-2ubuntu1                             amd64  install    ok  installed
+nano                                     8.7.1-1ubuntu0.1                            amd64  install    ok  installed
+ncurses-base                             6.6+20251231-1                              all    install    ok  installed
+ncurses-bin                              6.6+20251231-1                              amd64  install    ok  installed
+ncurses-term                             6.6+20251231-1                              all    install    ok  installed
+needrestart                              3.11-1ubuntu2                               all    install    ok  installed
+netbase                                  6.5build1                                   all    install    ok  installed
+netcat-openbsd                           1.234-1                                     amd64  install    ok  installed
+netplan-generator                        1.2-1ubuntu5.1                              amd64  install    ok  installed
+netplan.io                               1.2-1ubuntu5.1                              amd64  install    ok  installed
+networkd-dispatcher                      2.2.4-1.1ubuntu1                            all    install    ok  installed
+nftables                                 1.1.6-1                                     amd64  install    ok  installed
+ntfs-3g                                  1:2022.10.3-5ubuntu1.1                      amd64  install    ok  installed
+numactl                                  2.0.19-1build1                              amd64  install    ok  installed
+open-iscsi                               2.1.11-3ubuntu3.1                           amd64  install    ok  installed
+open-vm-tools                            2:13.0.10-1ubuntu1                          amd64  install    ok  installed
+openssh-client                           1:10.2p1-2ubuntu3.8                         amd64  install    ok  installed
+openssh-server                           1:10.2p1-2ubuntu3.8                         amd64  install    ok  installed
+openssh-sftp-server                      1:10.2p1-2ubuntu3.8                         amd64  install    ok  installed
+openssl                                  3.5.5-1ubuntu3.7                            amd64  install    ok  installed
+openssl-provider-legacy                  3.5.5-1ubuntu3.7                            amd64  install    ok  installed
+os-prober                                1.84ubuntu1                                 amd64  install    ok  installed
+overlayroot                              0.58ubuntu                                  all    install    ok  installed
+packagekit                               1.3.4-3ubuntu1.2                            amd64  install    ok  installed
+parted                                   3.6-6                                       amd64  install    ok  installed
+passwd                                   1:4.17.4-2ubuntu3                           amd64  install    ok  installed
+patch                                    2.8-2build1                                 amd64  install    ok  installed
+pci.ids                                  0.0~2026.02.12-1                            all    install    ok  installed
+pciutils                                 1:3.14.0-1build2                            amd64  install    ok  installed
+perl                                     5.40.1-7ubuntu0.3                           amd64  install    ok  installed
+perl-base                                5.40.1-7ubuntu0.3                           amd64  install    ok  installed
+perl-modules-5.40                        5.40.1-7ubuntu0.3                           all    install    ok  installed
+pinentry-curses                          1.3.2-3ubuntu1                              amd64  install    ok  installed
+plymouth                                 24.004.60+git20250831.4a3c171d-0ubuntu8     amd64  install    ok  installed
+plymouth-theme-ubuntu-text               24.004.60+git20250831.4a3c171d-0ubuntu8     amd64  install    ok  installed
+pnp.ids                                  0.394-1build1                               all    install    ok  installed
+polkitd                                  127-2ubuntu1.1                              amd64  install    ok  installed
+powermgmt-base                           1.38ubuntu2                                 all    install    ok  installed
+procps                                   2:4.0.4-9ubuntu1                            amd64  install    ok  installed
+psmisc                                   23.7-2ubuntu2                               amd64  install    ok  installed
+publicsuffix                             20260129.1928-1                             all    install    ok  installed
+python-apt-common                        3.1.0ubuntu1.1                              all    install    ok  installed
+python-babel-localedata                  2.17.0-2                                    all    install    ok  installed
+python3                                  3.14.3-0ubuntu2                             amd64  install    ok  installed
+python3-apport                           2.34.1-0ubuntu0.1                           all    install    ok  installed
+python3-apt                              3.1.0ubuntu1.1                              amd64  install    ok  installed
+python3-attr                             25.4.0-1build1                              all    install    ok  installed
+python3-autocommand                      2.2.2-4                                     all    install    ok  installed
+python3-automat                          25.4.16-1build1                             all    install    ok  installed
+python3-babel                            2.17.0-2                                    all    install    ok  installed
+python3-bcrypt                           5.0.0-3build1                               amd64  install    ok  installed
+python3-blinker                          1.9.0-2build1                               all    install    ok  installed
+python3-boto3                            1.40.72-1build1                             all    install    ok  installed
+python3-botocore                         1.40.72+repack-1build1                      all    install    ok  installed
+python3-bpfcc                            0.35.0+ds-1ubuntu2                          all    install    ok  installed
+python3-certifi                          2026.1.4+ds-1                               all    install    ok  installed
+python3-cffi-backend:amd64               2.0.0-3build1                               amd64  install    ok  installed
+python3-chardet                          5.2.0+dfsg-2build1                          all    install    ok  installed
+python3-click                            8.2.0+0.really.8.1.8-1build1                all    install    ok  installed
+python3-commandnotfound                  23.04.0build1                               all    install    ok  installed
+python3-configobj                        5.0.9-1build1                               all    install    ok  installed
+python3-constantly                       23.10.4-2build1                             all    install    ok  installed
+python3-cryptography                     46.0.5-1ubuntu2.2                           amd64  install    ok  installed
+python3-dateutil                         2.9.0-4build1                               all    install    ok  installed
+python3-dbus                             1.4.0-1build2                               amd64  install    ok  installed
+python3-debconf                          1.5.92                                      all    install    ok  installed
+python3-debian                           1.0.1ubuntu2                                all    install    ok  installed
+python3-distro                           1.9.0-1build1                               all    install    ok  installed
+python3-distro-info                      1.15                                        all    install    ok  installed
+python3-distupgrade                      1:26.04.27                                  all    install    ok  installed
+python3-gdbm                             3.14.3-0ubuntu2                             amd64  install    ok  installed
+python3-gi                               3.56.2-1                                    amd64  install    ok  installed
+python3-hamcrest                         2.1.0-3                                     all    install    ok  installed
+python3-httplib2                         0.22.0-1ubuntu0.1                           all    install    ok  installed
+python3-hyperlink                        21.0.0-6build1                              all    install    ok  installed
+python3-idna                             3.11-1ubuntu0.1                             all    install    ok  installed
+python3-incremental                      24.7.2-4                                    all    install    ok  installed
+python3-inflect                          7.5.0-1build1                               all    install    ok  installed
+python3-jaraco.context                   6.0.1-2                                     all    install    ok  installed
+python3-jaraco.functools                 4.1.0-1build1                               all    install    ok  installed
+python3-jaraco.text                      4.0.0-1build1                               all    install    ok  installed
+python3-jinja2                           3.1.6-1build1                               all    install    ok  installed
+python3-jmespath                         1.0.1-1build1                               all    install    ok  installed
+python3-json-pointer                     2.4-4                                       all    install    ok  installed
+python3-jsonpatch                        1.32-6                                      all    install    ok  installed
+python3-jsonschema                       4.19.2-6ubuntu2                             all    install    ok  installed
+python3-jsonschema-specifications        2023.12.1-4                                 all    install    ok  installed
+python3-jwt                              2.10.1-4ubuntu1.2                           all    install    ok  installed
+python3-launchpadlib                     2.1.0-1build1                               all    install    ok  installed
+python3-lazr.restfulclient               0.14.6-3build1                              all    install    ok  installed
+python3-lazr.uri                         1.0.6-7build1                               all    install    ok  installed
+python3-linkify-it                       2.0.3-1ubuntu3                              all    install    ok  installed
+python3-magic                            2:0.4.27-3build1                            all    install    ok  installed
+python3-markdown-it                      3.0.0-3build1                               all    install    ok  installed
+python3-markupsafe                       3.0.3-1build1                               amd64  install    ok  installed
+python3-mdurl                            0.1.2-1build1                               all    install    ok  installed
+python3-minimal                          3.14.3-0ubuntu2                             amd64  install    ok  installed
+python3-more-itertools                   10.8.0-1build1                              all    install    ok  installed
+python3-netaddr                          1.3.0-1build1                               all    install    ok  installed
+python3-netifaces:amd64                  0.11.0-2build7                              amd64  install    ok  installed
+python3-netplan                          1.2-1ubuntu5.1                              amd64  install    ok  installed
+python3-oauthlib                         3.3.1-1build1                               all    install    ok  installed
+python3-openssl                          25.3.0-1ubuntu1                             all    install    ok  installed
+python3-packaging                        26.0-1                                      all    install    ok  installed
+python3-passlib                          1.9.3-1ubuntu1                              all    install    ok  installed
+python3-pexpect                          4.9-4                                       all    install    ok  installed
+python3-pkg-resources                    78.1.1-0.1build1                            all    install    ok  installed
+python3-problem-report                   2.34.1-0ubuntu0.1                           all    install    ok  installed
+python3-ptyprocess                       0.7.0-6build1                               all    install    ok  installed
+python3-pyasn1                           0.6.3-1ubuntu0.1                            all    install    ok  installed
+python3-pyasn1-modules                   0.4.1-2build1                               all    install    ok  installed
+python3-pygments                         2.19.2+dfsg-1                               all    install    ok  installed
+python3-pyparsing                        3.3.2-2                                     all    install    ok  installed
+python3-referencing                      0.36.2-1ubuntu2                             all    install    ok  installed
+python3-requests                         2.32.5+dfsg-1ubuntu1.1                      all    install    ok  installed
+python3-rich                             13.9.4-1.2                                  all    install    ok  installed
+python3-rpds-py                          0.27.1-2ubuntu3                             amd64  install    ok  installed
+python3-s3transfer                       0.14.0-1build1                              all    install    ok  installed
+python3-serial                           3.5-2build1                                 all    install    ok  installed
+python3-service-identity                 24.2.0-1build1                              all    install    ok  installed
+python3-setuptools                       78.1.1-0.1build1                            all    install    ok  installed
+python3-six                              1.17.0-2build1                              all    install    ok  installed
+python3-software-properties              0.120.1                                     all    install    ok  installed
+python3-systemd                          235-1build9                                 amd64  install    ok  installed
+python3-twisted                          25.5.0-5ubuntu0.1                           all    install    ok  installed
+python3-typeguard                        4.4.4-2                                     all    install    ok  installed
+python3-typing-extensions                4.15.0-2                                    all    install    ok  installed
+python3-uc-micro                         1.0.3-1build1                               all    install    ok  installed
+python3-update-manager                   1:26.04.5                                   all    install    ok  installed
+python3-urllib3                          2.6.3-1ubuntu1.2                            all    install    ok  installed
+python3-wadllib                          2.0.0-3                                     all    install    ok  installed
+python3-xkit                             0.5.0ubuntu8                                all    install    ok  installed
+python3-yaml                             6.0.3-1build1                               amd64  install    ok  installed
+python3-zipp                             3.23.0-1build1                              all    install    ok  installed
+python3-zope.interface                   8.2-1build1                                 amd64  install    ok  installed
+python3.14                               3.14.4-1ubuntu0.2                           amd64  install    ok  installed
+python3.14-gdbm                          3.14.4-1ubuntu0.2                           amd64  install    ok  installed
+python3.14-minimal                       3.14.4-1ubuntu0.2                           amd64  install    ok  installed
+readline-common                          8.3-4                                       all    install    ok  installed
+rpcsvc-proto                             1.4.3-1build1                               amd64  install    ok  installed
+rsync                                    3.4.1+ds1-7ubuntu0.3                        amd64  install    ok  installed
+rsyslog                                  8.2512.0-1ubuntu4.2                         amd64  install    ok  installed
+rust-coreutils                           0.10.0-1ubuntu2~26.04.1                     amd64  install    ok  installed
+sbsigntool                               0.9.4-3.1ubuntu9                            amd64  install    ok  installed
+screen                                   4.9.1-3ubuntu2                              amd64  install    ok  installed
+secureboot-db                            1.9build2                                   amd64  install    ok  installed
+sed                                      4.9-2ubuntu1                                amd64  install    ok  installed
+sensible-utils                           0.0.26build1                                all    install    ok  installed
+sg3-utils                                1.48-3ubuntu3.2                             amd64  install    ok  installed
+sg3-utils-udev                           1.48-3ubuntu3.2                             all    install    ok  installed
+sgml-base                                1.31+nmu1build1                             all    install    ok  installed
+shared-mime-info                         2.4-5build3                                 amd64  install    ok  installed
+snapd                                    2.76.3+ubuntu26.04                          amd64  install    ok  installed
+software-properties-common               0.120.1                                     all    install    ok  installed
+sos                                      4.11.2-0ubuntu0.1                           all    install    ok  installed
+squashfs-tools                           1:4.7.5-1                                   amd64  install    ok  installed
+ssh-import-id                            5.11-0ubuntu4                               all    install    ok  installed
+strace                                   6.19+ds-0ubuntu5                            amd64  install    ok  installed
+sudo                                     1.9.17p2-1ubuntu3.2                         amd64  install    ok  installed
+sudo-common                              1.2ubuntu                                   all    install    ok  installed
+sudo-rs                                  0.2.13-0ubuntu1.2                           amd64  install    ok  installed
+sysstat                                  12.7.7-0ubuntu2                             amd64  install    ok  installed
+systemd                                  259.5-0ubuntu3.4                            amd64  install    ok  installed
+systemd-cryptsetup                       259.5-0ubuntu3.4                            amd64  install    ok  installed
+systemd-hwe-hwdb                         259.5.3ubuntu                               all    install    ok  installed
+systemd-resolved                         259.5-0ubuntu3.4                            amd64  install    ok  installed
+systemd-sysv                             259.5-0ubuntu3.4                            amd64  install    ok  installed
+sysvinit-utils                           3.15-5ubuntu1                               amd64  install    ok  installed
+tar                                      1.35+dfsg-4ubuntu0.4                        amd64  install    ok  installed
+tcl                                      8.6.16build1                                amd64  install    ok  installed
+tcl8.6                                   8.6.17+dfsg-1build1                         amd64  install    ok  installed
+tcpdump                                  4.99.6-1                                    amd64  install    ok  installed
+telnet                                   0.17+2.7-2ubuntu1.1                         all    install    ok  installed
+thermald                                 2.5.11-0ubuntu1.1                           amd64  install    ok  installed
+thin-provisioning-tools                  1.1.0-4ubuntu2                              amd64  install    ok  installed
+time                                     1.9-0.4                                     amd64  install    ok  installed
+tmux                                     3.6a-2ubuntu0.1                             amd64  install    ok  installed
+tnftp                                    20260211-1                                  amd64  install    ok  installed
+tpm-udev                                 4.1.3-6                                     all    install    ok  installed
+trace-cmd                                3.3.3-1ubuntu2                              amd64  install    ok  installed
+tzdata                                   2026e-0ubuntu0.26.04.1                      all    install    ok  installed
+ubuntu-drivers-common                    1:0.10.9                                    amd64  install    ok  installed
+ubuntu-kernel-accessories                1.570.4                                     amd64  install    ok  installed
+ubuntu-keyring                           2023.11.28.1build1                          all    install    ok  installed
+ubuntu-minimal                           1.570.4                                     amd64  install    ok  installed
+ubuntu-pro-client                        37.2ubuntu0.1                               amd64  install    ok  installed
+ubuntu-pro-client-l10n                   37.2ubuntu0.1                               amd64  install    ok  installed
+ubuntu-release-upgrader-core             1:26.04.27                                  all    install    ok  installed
+ubuntu-server                            1.570.4                                     amd64  install    ok  installed
+ubuntu-server-minimal                    1.570.4                                     amd64  install    ok  installed
+ubuntu-standard                          1.570.4                                     amd64  install    ok  installed
+ucf                                      3.0052ubuntu1                               all    install    ok  installed
+udev                                     259.5-0ubuntu3.4                            amd64  install    ok  installed
+udisks2                                  2.10.91-1ubuntu2.1                          amd64  install    ok  installed
+ufw                                      0.36.2-9build1                              all    install    ok  installed
+unattended-upgrades                      2.12ubuntu9                                 all    install    ok  installed
+unminimize                               0.5build1                                   amd64  install    ok  installed
+update-manager-core                      1:26.04.5                                   all    install    ok  installed
+update-notifier-common                   3.207.2                                     all    install    ok  installed
+upower                                   1.91.1-1                                    amd64  install    ok  installed
+usb-modeswitch                           2.6.2-1ubuntu1                              amd64  install    ok  installed
+usb-modeswitch-data                      20191128-7build1                            all    install    ok  installed
+usb.ids                                  2025.12.13-1                                all    install    ok  installed
+usbmuxd                                  1.1.1-7                                     amd64  install    ok  installed
+usbutils                                 1:019-1                                     amd64  install    ok  installed
+util-linux                               2.41.3-3ubuntu2.2                           amd64  install    ok  installed
+util-linux-extra                         2.41.3-3ubuntu2.2                           amd64  install    ok  installed
+uuid-runtime                             2.41.3-3ubuntu2.2                           amd64  install    ok  installed
+vim                                      2:9.1.2141-1ubuntu4.9                       amd64  install    ok  installed
+vim-common                               2:9.1.2141-1ubuntu4.9                       all    install    ok  installed
+vim-runtime                              2:9.1.2141-1ubuntu4.9                       all    install    ok  installed
+vim-tiny                                 2:9.1.2141-1ubuntu4.9                       amd64  install    ok  installed
+wget                                     1.25.0-2ubuntu4.4                           amd64  install    ok  installed
+whiptail                                 0.52.25-1ubuntu3                            amd64  install    ok  installed
+wireless-regdb                           2026.05.30-0ubuntu1~26.04.1                 all    install    ok  installed
+xauth                                    1:1.1.2-1.1build1                           amd64  install    ok  installed
+xdg-user-dirs                            0.19-1                                      amd64  install    ok  installed
+xfsprogs                                 6.18.0-3                                    amd64  install    ok  installed
+xkb-data                                 2.46-2                                      all    install    ok  installed
+xml-core                                 0.19build1                                  all    install    ok  installed
+xxd                                      2:9.1.2141-1ubuntu4.9                       amd64  install    ok  installed
+xz-utils                                 5.8.3-1                                     amd64  install    ok  installed
+zerofree                                 1.1.1-1build6                               amd64  install    ok  installed
+zlib1g:amd64                             1:1.3.dfsg+really1.3.1-1ubuntu3.1           amd64  install    ok  installed
+zstd                                     1.5.7+dfsg-3                                amd64  install    ok  installed
+
+-----------------------------------------------------------------------------------------
+
+#11_ Levantamento de todos os softwares que precisam ser atualizados no servidor?
+
+apt list --upgradable
+
+open-vm-tools/resolute-updates 2:13.0.10-1ubuntu1.1 amd64 [upgradable from: 2:13.0.10-1ubuntu1]
+snapd/resolute-updates 2.77.1+ubuntu26.04.2 amd64 [upgradable from: 2.76.3+ubuntu26.04]
+
+-----------------------------------------------------------------------------------------
+
+#12_ Levantamento de todos os serviços rodando no servidor?
+
+systemctl list-units --type=service --state=running
+
+  UNIT                        LOAD   ACTIVE SUB     DESCRIPTION
+  chrony.service              loaded active running chrony, an NTP client/server
+  cron.service                loaded active running Regular background program processing daemon
+  dbus.service                loaded active running D-Bus System Message Bus
+  fwupd.service               loaded active running Firmware update daemon
+  getty@tty1.service          loaded active running Getty on tty1
+  ModemManager.service        loaded active running Modem Manager
+  multipathd.service          loaded active running Device-Mapper Multipath Device Controller
+  networkd-dispatcher.service loaded active running Dispatcher daemon for systemd-networkd
+  polkit.service              loaded active running Authorization Manager
+  rsyslog.service             loaded active running System Logging Service
+  snapd.service               loaded active running Snap Daemon
+  ssh.service                 loaded active running OpenBSD Secure Shell server
+  systemd-journald.service    loaded active running Journal Service
+  systemd-logind.service      loaded active running User Login Management
+  systemd-networkd.service    loaded active running Network Management
+  systemd-resolved.service    loaded active running Network Name Resolution
+  systemd-udevd.service       loaded active running Rule-based Manager for Device Events and Files
+  udisks2.service             loaded active running Disk Manager
+  unattended-upgrades.service loaded active running Unattended Upgrades Shutdown
+  upower.service              loaded active running Daemon for power management
+  user@1000.service           loaded active running User Manager for UID 1000
+
+Legend: LOAD   → Reflects whether the unit definition was properly loaded.
+        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.
+        SUB    → The low-level unit activation state, values depend on unit type.
+
+21 loaded units listed.
+
+-----------------------------------------------------------------------------------------
+
+#13_ Levantamento de todos os processos rodando no servidor?
+
+ps aux
+
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.4  25072 16344 ?        Ss   17:11   0:05 /usr/lib/systemd/systemd --switched-root --s
+root           2  0.0  0.0      0     0 ?        S    17:11   0:00 [kthreadd]
+root           3  0.0  0.0      0     0 ?        S    17:11   0:00 [pool_workqueue_release]
+root           4  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-rcu_gp]
+root           5  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-sync_wq]
+root           6  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-kvfree_rcu_reclaim]
+root           7  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-slub_flushwq]
+root           8  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-netns]
+root          10  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/0:0H-kblockd]
+root          12  0.0  0.0      0     0 ?        I    17:11   0:00 [kworker/u8:0-ipv6_addrconf]
+root          13  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-mm_percpu_wq]
+root          14  0.0  0.0      0     0 ?        S    17:11   0:00 [ksoftirqd/0]
+root          15  0.0  0.0      0     0 ?        I    17:11   0:00 [rcu_preempt]
+root          16  0.0  0.0      0     0 ?        S    17:11   0:00 [rcu_exp_par_gp_kthread_worker/0]
+root          17  0.0  0.0      0     0 ?        S    17:11   0:00 [rcu_exp_gp_kthread_worker]
+root          18  0.0  0.0      0     0 ?        S    17:11   0:00 [migration/0]
+root          19  0.0  0.0      0     0 ?        S    17:11   0:00 [kprobe-optimizer]
+root          20  0.0  0.0      0     0 ?        S    17:11   0:00 [idle_inject/0]
+root          21  0.0  0.0      0     0 ?        S    17:11   0:00 [cpuhp/0]
+root          22  0.0  0.0      0     0 ?        S    17:11   0:00 [cpuhp/1]
+root          23  0.0  0.0      0     0 ?        S    17:11   0:00 [idle_inject/1]
+root          24  0.0  0.0      0     0 ?        S    17:11   0:00 [migration/1]
+root          25  0.0  0.0      0     0 ?        S    17:11   0:00 [ksoftirqd/1]
+root          30  0.0  0.0      0     0 ?        S    17:11   0:00 [kdevtmpfs]
+root          31  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-inet_frag_wq]
+root          32  0.0  0.0      0     0 ?        I    17:11   0:00 [rcu_tasks_kthread]
+root          33  0.0  0.0      0     0 ?        I    17:11   0:00 [rcu_tasks_rude_kthread]
+root          34  0.0  0.0      0     0 ?        S    17:11   0:00 [kauditd]
+root          35  0.0  0.0      0     0 ?        S    17:11   0:00 [khungtaskd]
+root          36  0.0  0.0      0     0 ?        S    17:11   0:00 [oom_reaper]
+root          38  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-writeback]
+root          40  0.0  0.0      0     0 ?        S    17:11   0:00 [kcompactd0]
+root          41  0.0  0.0      0     0 ?        SN   17:11   0:00 [ksmd]
+root          42  0.0  0.0      0     0 ?        SN   17:11   0:00 [khugepaged]
+root          43  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-kblockd]
+root          44  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-blkcg_punt_bio]
+root          45  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-kintegrityd]
+root          46  0.0  0.0      0     0 ?        S    17:11   0:00 [irq/9-acpi]
+root          48  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-tpm_dev_wq]
+root          49  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-ata_sff]
+root          50  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-md_bitmap]
+root          51  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-md_llbitmap_io]
+root          52  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-md_llbitmap_unplug]
+root          53  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-edac-poller]
+root          54  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-devfreq_wq]
+root          55  0.0  0.0      0     0 ?        S    17:11   0:00 [watchdogd]
+root          56  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-quota_events_unbound]
+root          57  0.0  0.0      0     0 ?        S    17:11   0:00 [kswapd0]
+root          58  0.0  0.0      0     0 ?        S    17:11   0:00 [ecryptfs-kthread]
+root          59  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-kthrotld]
+root          60  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-acpi_thermal_pm]
+root          61  0.0  0.0      0     0 ?        S    17:11   0:00 [scsi_eh_0]
+root          62  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-scsi_tmf_0]
+root          63  0.0  0.0      0     0 ?        S    17:11   0:00 [scsi_eh_1]
+root          64  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-scsi_tmf_1]
+root          70  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/1:1H-kblockd]
+root          72  0.0  0.0      0     0 ?        I    17:11   0:00 [kworker/u10:1-events_unbound]
+root          73  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-mld]
+root          74  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-ipv6_addrconf]
+root          75  0.0  0.0      0     0 ?        I    17:11   0:00 [kworker/u8:1-ipv6_addrconf]
+root          76  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-kstrp]
+root          78  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/u11:0]
+root          79  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/u12:0]
+root          80  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/u13:0]
+root          92  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-charger_manager]
+root         329  0.0  0.0      0     0 ?        S    17:11   0:00 [scsi_eh_2]
+root         330  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-scsi_tmf_2]
+root         404  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-kdmflush/252:0]
+root         443  0.0  0.0      0     0 ?        S    17:11   0:00 [jbd2/dm-0-8]
+root         444  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-ext4-rsv-conversion]
+root         538  0.0  0.0      0     0 ?        S    17:11   0:00 [psimon]
+root         544  0.0  0.4  58596 16464 ?        S<s  17:11   0:00 /usr/lib/systemd/systemd-journald
+root         560  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-kmpathd]
+root         561  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-kmpath_handlerd]
+root         575  0.0  0.2 279492  9644 ?        SLsl 17:11   0:01 /usr/sbin/multipathd -d -s
+systemd+     600  0.0  0.4  22632 14656 ?        Ss   17:11   0:00 /usr/lib/systemd/systemd-resolved
+root         604  0.0  0.4  39956 14204 ?        Ss   17:11   0:00 /usr/lib/systemd/systemd-udevd
+root         605  0.0  0.0      0     0 ?        S    17:11   0:00 [psimon]
+root         704  0.0  0.0      0     0 ?        S    17:11   0:00 [irq/18-vmwgfx]
+root         705  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-ttm]
+root         763  0.0  0.0      0     0 ?        S    17:11   0:00 [jbd2/sda2-8]
+root         764  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-ext4-rsv-conversion]
+systemd+     810  0.0  0.3  21432 12496 ?        Ss   17:11   0:00 /usr/lib/systemd/systemd-networkd
+root         861  0.0  0.0      0     0 ?        I<   17:11   0:00 [kworker/R-cfg80211]
+root        1007  0.0  0.0   2888  2012 ?        Ss   17:11   0:00 /bin/sh /usr/lib/systemd/scripts/chronyd-sta
+root        1008  0.0  0.0   7060  3420 ?        Ss   17:11   0:00 /usr/sbin/cron -f -P
+message+    1009  0.0  0.1   9160  5760 ?        Ss   17:11   0:00 @dbus-daemon --system --address=systemd: --n
+root        1018  0.0  0.8  46744 30320 ?        Ss   17:11   0:00 /usr/bin/python3 /usr/bin/networkd-dispatche
+polkitd     1019  0.0  0.2 308280 10392 ?        Ssl  17:11   0:00 /usr/lib/polkit-1/polkitd --no-debug --log-l
+root        1023  0.0  1.2 1886136 42204 ?       Ssl  17:11   0:02 /usr/lib/snapd/snapd
+root        1026  0.0  0.2  18408  9640 ?        Ss   17:11   0:00 /usr/lib/systemd/systemd-logind
+root        1028  0.0  0.4 543440 15252 ?        Ssl  17:11   0:00 /usr/libexec/udisks2/udisksd
+syslog      1068  0.0  0.1 220548  6284 ?        Ssl  17:12   0:00 /usr/sbin/rsyslogd -n -iNONE
+root        1070  0.0  0.1   8760  5656 ?        Ss   17:12   0:00 login -- senac
+_chrony     1076  0.0  0.3  23868 11468 ?        S    17:12   0:00 /usr/sbin/chronyd -n -F 1
+root        1105  0.0  0.9 126112 33064 ?        Ssl  17:12   0:00 /usr/bin/python3 /usr/share/unattended-upgra
+_chrony     1144  0.0  0.0  12096  2348 ?        S    17:12   0:00 /usr/sbin/chronyd -n -F 1
+root        1184  0.0  0.4 391604 13928 ?        Ssl  17:12   0:00 /usr/sbin/ModemManager
+root        1245  0.0  0.0      0     0 ?        I<   17:12   0:00 [kworker/1:2H]
+senac       1400  0.0  0.3  22060 12852 ?        Ss   17:27   0:00 /usr/lib/systemd/systemd --user
+senac       1402  0.0  0.1  23016  4104 ?        S    17:27   0:00 (sd-pam)
+senac       1421  0.0  0.1   8856  5872 tty1     Ss+  17:27   0:00 -bash
+root        1468  0.0  0.2  10744  7772 ?        Ss   17:32   0:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-1
+root        1471  0.0  0.3  18528 12156 ?        Ss   17:32   0:00 sshd-session: senac [priv]
+senac       1529  0.1  0.2  18688  7720 ?        R    17:32   0:12 sshd-session: senac@pts/0
+senac       1530  0.0  0.2  10580  7096 pts/0    Ss   17:32   0:00 -bash
+root        1721  0.0  0.0      0     0 ?        I    17:42   0:00 [kworker/u10:0-events_unbound]
+root        1723  0.0  1.3 365792 45908 ?        Ssl  17:42   0:00 /usr/libexec/fwupd/fwupd
+root        1732  0.0  0.3 318528 11528 ?        Ssl  17:42   0:00 /usr/libexec/upowerd
+root        1929  0.0  0.0      0     0 ?        I    18:00   0:00 [kworker/u9:2-ext4-rsv-conversion]
+root        1937  0.0  0.0      0     0 ?        I    18:10   0:00 [kworker/u9:0-events_unbound]
+root        1996  0.0  0.0      0     0 ?        I    18:50   0:00 [kworker/u10:3-events_power_efficient]
+root        1998  0.0  0.0      0     0 ?        I    18:50   0:00 [kworker/u9:1-events_power_efficient]
+root        2039  0.0  0.0      0     0 ?        I    19:10   0:00 [kworker/1:0-events]
+root        2086  0.0  0.0      0     0 ?        I<   19:18   0:00 [kworker/0:2H]
+root        2110  0.0  0.0      0     0 ?        I    19:20   0:00 [kworker/1:2-events]
+root        2111  0.4  0.0      0     0 ?        I    19:20   0:05 [kworker/0:2-events]
+root        2144  0.0  0.0      0     0 ?        I    19:30   0:00 [kworker/0:1-cgroup_offline]
+root        2181  0.0  0.0      0     0 ?        I    19:40   0:00 [kworker/0:0-cgroup_free]
+root        2182  0.0  0.0      0     0 ?        I    19:40   0:00 [kworker/u9:3]
+senac       2188 25.0  0.1   9764  4676 pts/0    R+   19:41   0:00 ps aux
+
+-----------------------------------------------------------------------------------------
+
+#14_ Levantamento de todos os usuários do servidor?
+
+cat /etc/passwd
+
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/run/ircd:/usr/sbin/nologin
+_apt:x:42:65534::/nonexistent:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+systemd-network:x:998:998:systemd Network Management:/:/usr/sbin/nologin
+dhcpcd:x:997:997:DHCP Client Daemon:/usr/lib/dhcpcd:/bin/false
+messagebus:x:996:996:System Message Bus:/nonexistent:/usr/sbin/nologin
+systemd-resolve:x:990:990:systemd Resolver:/:/usr/sbin/nologin
+_chrony:x:989:989:Chrony Daemon:/var/lib/chrony:/usr/sbin/nologin
+usbmux:x:100:46:usbmux daemon:/var/lib/usbmux:/usr/sbin/nologin
+polkitd:x:988:988:User for polkitd:/:/usr/sbin/nologin
+syslog:x:101:103::/nonexistent:/usr/sbin/nologin
+uuidd:x:102:104::/run/uuidd:/usr/sbin/nologin
+tcpdump:x:986:986:tcpdump:/nonexistent:/usr/sbin/nologin
+tss:x:985:985:tss user for tpm2:/:/usr/sbin/nologin
+landscape:x:103:106::/var/lib/landscape:/usr/sbin/nologin
+fwupd-refresh:x:984:984:Firmware update daemon:/var/lib/fwupd:/usr/sbin/nologin
+senac:x:1000:1000:gabriel:/home/senac:/bin/bash
+sshd:x:983:65534:sshd user:/run/sshd:/usr/sbin/nologin
+
+-----------------------------------------------------------------------------------------
+
+#15_ Levantamento de todos os grupos do servidor?
+
+cat /etc/group
+
+root:x:0:
+daemon:x:1:
+bin:x:2:
+sys:x:3:
+adm:x:4:syslog,senac
+tty:x:5:
+disk:x:6:
+lp:x:7:
+mail:x:8:
+news:x:9:
+uucp:x:10:
+man:x:12:
+proxy:x:13:
+kmem:x:15:
+dialout:x:20:
+fax:x:21:
+voice:x:22:
+cdrom:x:24:senac
+floppy:x:25:
+tape:x:26:
+sudo:x:27:senac
+audio:x:29:
+dip:x:30:senac
+www-data:x:33:
+backup:x:34:
+operator:x:37:
+list:x:38:
+irc:x:39:
+src:x:40:
+shadow:x:42:
+utmp:x:43:
+video:x:44:
+sasl:x:45:
+plugdev:x:46:senac
+staff:x:50:
+games:x:60:
+users:x:100:senac
+nogroup:x:65534:
+systemd-journal:x:999:
+systemd-network:x:998:
+dhcpcd:x:997:
+lxd:x:101:senac
+messagebus:x:996:
+input:x:995:
+sgx:x:994:
+clock:x:993:
+kvm:x:992:
+render:x:991:
+systemd-resolve:x:990:
+_ssh:x:102:
+_chrony:x:989:
+polkitd:x:988:
+crontab:x:987:
+syslog:x:103:
+uuidd:x:104:
+rdma:x:105:
+tcpdump:x:986:
+tss:x:985:
+landscape:x:106:
+fwupd-refresh:x:984:
+senac:x:1000:
+
+-----------------------------------------------------------------------------------------
+
+#16_ Levantamento de todas as conexões estabelecidas do servidor?
+
+ss -tunap
+
+Netid     State      Recv-Q     Send-Q         Local Address:Port           Peer Address:Port      Process
+udp       UNCONN     0          0                 127.0.0.54:53                  0.0.0.0:*
+udp       UNCONN     0          0              127.0.0.53%lo:53                  0.0.0.0:*
+udp       ESTAB      0          0               10.24.69.215:39053               8.8.4.4:53
+udp       UNCONN     0          0                  127.0.0.1:323                 0.0.0.0:*
+udp       ESTAB      0          0               10.24.69.215:58412               8.8.4.4:53
+udp       UNCONN     0          0                      [::1]:323                    [::]:*
+tcp       LISTEN     0          4096           127.0.0.53%lo:53                  0.0.0.0:*
+tcp       LISTEN     0          4096                 0.0.0.0:22                  0.0.0.0:*
+tcp       LISTEN     0          4096              127.0.0.54:53                  0.0.0.0:*
+tcp       ESTAB      0          36              10.24.69.215:22              10.24.69.27:55192
+tcp       LISTEN     0          4096                    [::]:22                     [::]:*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
