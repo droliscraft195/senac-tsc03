@@ -1,4 +1,4 @@
-#017_Configuracao de IP e DNS com Netplan (EM)
+Configuracao de IP e DNS com Netplan (EM)
 
 (Codigo digitado)
 

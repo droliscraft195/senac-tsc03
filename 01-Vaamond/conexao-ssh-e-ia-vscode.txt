@@ -1,0 +1,59 @@
+CONEXAO AO UBUNTU SERVER POR SSH E USO DO GITHUB COPILOT NO VS CODE
+
+1. CONECTANDO AO UBUNTU SERVER PELO VS CODE
+
+Pre-requisitos:
+- VS Code instalado no computador.
+- Extensao Remote - SSH, da Microsoft, instalada no VS Code.
+- Acesso SSH ao Ubuntu Server, com usuario, endereco IP e senha.
+
+Passo a passo:
+
+1. Abra o VS Code e instale a extensao Remote - SSH, da Microsoft, caso ainda nao esteja instalada.
+2. Clique no indicador remoto (><), no canto inferior esquerdo, para abrir as opcoes de conexao remota.
+3. Clique em "Connect to Host..." (Conectar ao Host).
+4. Na primeira conexao, informe o destino SSH no formato:
+
+   usuario@IP_DO_SERVIDOR
+
+   Exemplo de formato: senac@192.168.0.10
+   Use o usuario e o IP reais do seu servidor.
+5. Se o VS Code perguntar onde salvar a configuracao SSH, selecione o arquivo sugerido.
+   O host ficara salvo e aparecera novamente em "Connect to Host..." nas proximas vezes.
+6. Se solicitado, escolha Linux como sistema operacional do host remoto.
+7. Aguarde a abertura de uma nova janela do VS Code e informe a senha do usuario do servidor quando solicitado.
+8. Na janela conectada ao servidor, escolha "Open Folder..." (Abrir Pasta).
+9. Informe ou selecione a pasta do servidor que deseja acessar e confirme.
+10. Aguarde o VS Code carregar os arquivos da pasta remota.
+
+Nas proximas conexoes, selecione o host salvo em "Connect to Host..." e informe a senha quando solicitado.
+
+Comando SSH equivalente no terminal:
+
+ssh usuario@IP_DO_SERVIDOR
+
+Nao salve a senha neste arquivo. Ela deve ser informada somente no prompt de autenticacao.
+
+2. CONFIGURANDO O GITHUB COPILOT PARA AJUDAR NO VS CODE
+
+Pre-requisitos:
+- Extensao ou recurso GitHub Copilot/Copilot Chat disponivel no VS Code.
+- Conta GitHub com acesso ao Copilot.
+- Repositorio aberto no VS Code; para trabalhar no servidor, use a janela conectada por SSH.
+
+Passo a passo geral:
+
+1. Abra o VS Code e localize a mensagem ou opcao para configurar o GitHub Copilot.
+2. Siga as instrucoes exibidas para ativar o Copilot e entre na conta GitHub, se solicitado.
+3. Abra o repositorio ou a pasta de trabalho no VS Code.
+4. Abra o Copilot Chat e escreva uma pergunta sobre o projeto ou os arquivos abertos.
+5. Para obter ajuda em um arquivo de texto, abra o arquivo e descreva no chat o comando ou procedimento que deseja entender ou documentar.
+6. Confira as respostas e os comandos antes de executa-los no servidor.
+
+ORIENTACOES DO COPILOT NESTE REPOSITORIO
+
+O arquivo .github/copilot-instructions.md contem orientacoes sobre a estrutura deste repositorio e o formato das anotacoes. Ele ajuda o Copilot a responder levando em conta o projeto; nao e uma IA separada nem substitui a extensao ou o acesso a conta GitHub.
+
+RESUMO
+
+Foi usada a extensao Remote - SSH da Microsoft para conectar o VS Code ao Ubuntu Server pelo usuario e IP, autenticar com a senha, abrir uma pasta remota e trabalhar nos arquivos. O GitHub Copilot/Copilot Chat foi configurado no VS Code para ajudar com perguntas sobre o repositorio e os arquivos.

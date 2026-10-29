@@ -1,9 +1,9 @@
-#018_Comandos para enviar alteracoes ao GitHub
+Comandos para enviar alteracoes ao GitHub
 
 (Codigo digitado)
 
 git status
-git add "caminho-do-arquivo"
+git add .
 git status
 git commit -m "Descreva a alteracao"
 git push
