@@ -2,11 +2,11 @@ Comandos para enviar alteracoes ao GitHub
 
 (Codigo digitado)
 
-git status
+git pull (puxar do repositorio para local) 
 git add .
-git status
 git commit -m "Descreva a alteracao"
 git push
+
 
 Exemplo para adicionar o arquivo de anotacoes:
 
@@ -30,3 +30,4 @@ Confira no GitHub se o arquivo e a alteracao aparecem no repositorio.
 (Pequeno resumo)
 
 Sequencia de comandos para selecionar um arquivo, registrar a alteracao no Git e envia-la ao repositorio remoto no GitHub.
+
