@@ -1,0 +1,162 @@
+O TCP Wrapper é uma camada extra de segurança do Linux que controla quem pode ou não acessar um serviço de rede no seu servidor (como o SSH), antes mesmo de o programa pedir usuário e senha.
+
+Ele funciona através de dois arquivos de texto (hosts.allow e hosts.deny) e serve basicamente para três coisas:
+
+Filtrar acesso por IP ou rede: Você decide quais computadores ou redes têm permissão para conversar com um serviço específico e bloqueia o resto do mundo.
+
+Gerar logs (registros): Permite disparar comandos simples (como o echo nos seus arquivos) para anotar em um arquivo de log quem tentou conectar, de qual IP e se foi aceito ou barrado.
+
+Funcionar sem depender do firewall: Como ele age direto no programa (via biblioteca libwrap), dá para controlar acessos mesmo se o firewall principal (ufw ou iptables) estiver desligado — desde que o programa do serviço tenha sido compilado com suporte a ele.
+
+
+
+Quando um cliente tenta se conectar a um serviço protegido (como o SSH, FTP ou Telnet), o TCP Wrapper intercepta a 
+tentativa e lê os arquivos de configuração na seguinte ordem estrita:
+
+/etc/hosts.allow (Lista de permissão): O sistema verifica se há alguma regra liberando o IP ou rede do cliente para 
+aquele serviço. Se encontrar uma regra compatível, o acesso é liberado imediatamente e o processo para por aqui.
+
+/etc/hosts.deny (Lista de bloqueio): Se não houver regra no hosts.allow, o sistema lê o hosts.deny. 
+Se encontrar uma regra bloqueando o IP ou rede, a conexão é recusada.
+
+Padrão: Se o IP não estiver em nenhum dos dois arquivos, o acesso é permitido por padrão.
+
+
+Estrutura das regras
+A sintaxe dentro dos arquivos segue o formato:
+
+serviço : cliente [: opção]
+
+Bloquear tudo no /etc/hosts.deny (boa prática de segurança para criar uma whitelist):
+
+ALL : ALL
+
+Liberar apenas uma rede específica para o SSH no /etc/hosts.allow
+
+sshd : 192.168.1.0/255.255.255.0
+
+Bloquear um IP específico no /etc/hosts.deny
+
+sshd : 203.0.113.45
+
+Limitações importantes
+Não funciona para todos os serviços: O TCP Wrapper só protege serviços que foram compilados com suporte à biblioteca libwrap. Você pode testar se um serviço suporta isso rodando o comando ldd $(which sshd) | grep libwrap (se retornar algo, ele é compatível).
+
+Complemento, não substituto: Ele não substitui um firewall de rede (como iptables, nftables ou ufw), pois atua apenas em serviços específicos que utilizam TCP e suportam a biblioteca. Hoje em dia, é considerado uma ferramenta clássica/legada, mas muito cobrada em certificações Linux (como LPIC-1) e útil como camada extra de defesa (Defense in Depth).
+
+
+config do hosts.allow:
+
+(Liberação específica + registro de acesso permitido):
+
+As linhas ativas com sshd: liberam o acesso SSH para os alvos indicados (10.24.86.32 e 10.24.86.200) e registram o acesso em /var/log/allow-ssh.log via spawn.
+
+As regras abaixo de Exemplos de configuração... estão comentadas (#) para referência.
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Autor: Robson Vaamonde
+# Procedimentos em TI: http://procedimentosemti.com.br
+# Bora para Prática: http://boraparapratica.com.br
+# Robson Vaamonde: http://vaamonde.com.br
+# Facebook Procedimentos em TI: https://www.facebook.com/ProcedimentosEmTi
+# Facebook Bora para Prática: https://www.facebook.com/BoraParaPratica
+# Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem
+# YouTube Bora Para Prática: https://www.youtube.com/boraparapratica
+# Data de criação: 29/09/2026
+# Data de atualização: 29/09/2026
+# Versão: 0.01
+# Testado e homologado para a versão do Ubuntu Server 26.04.x LTS x64
+#
+# Comando utilizado para verificar se o serviço (daemon) de rede tem suporte ao
+# TCPWrappers: ldd /usr/sbin/sshd | grep libwrap (Biblioteca LibWrap), o OpenSSH
+# tem suporte nativo a biblioteca do TCPWrappers, garantindo a sua segurança sem
+# utilizar regras de Firewall (iptables ou ufw).
+#
+# Logando todas as informações de acesso nos arquivos de Log's de cada serviço
+# em: /var/log/allow-*.log (* nome do serviço).
+#
+# Opções de configuração do Hosts Allow: Daemon (serviço de rede), Client (cliente
+# que vai acessar o serviço), Shell Command (comando que será executado depois que
+# acessar o serviço)
+#
+# Opções das variáveis do Hosts Allow: date -u (--universal), %d (The daemon process name),
+# %R (The servers port number), %A (The server host address), %N (The server host name),
+# %c (Client information), %r (The clients port number), %p (The daemon process id)
+#
+#==================== BLOCO DE CONFIGURAÇÃO DA LIBERAÇÃO DOS DAEMON ====================
+#
+# Permitindo a Sub-Rede IPv4 se autenticar remotamente no Servidor de OpenSSH
+# DAEMON    CLIENT    SHELL COMMAND
+sshd: 10.24.86.32: spawn /bin/echo "$(date -u) | Serviço Local %d | Porta Local %R | Host Local %A | Hostname %N | Host Remoto %c | Porta Remota %r | Processo Local %p" >> /var/log/allow-ssh.log
+#
+# Permitindo o Prefixo IPv6 se autenticar remotamente no Servidor de OpenSSH
+# DAEMON    CLIENT    SHELL COMMAND
+sshd: 10.24.86.200: spawn /bin/echo "$(date -u) | Serviço Local %d | Porta Local %R | Host Local %A | Hostname %N | Host Remoto %c | Porta Remota %r | Processo Local %p" >> /var/log/allow-ssh.log
+#
+# ==================== Exemplos de configuração do TCP Wrappers do arquivo hosts.allow: ====================
+#
+# Permitindo uma Sub-Rede ou nome de domínio FQDN
+# DAEMON    CLIENT    SHELL COMMAND
+#sshd: 172.16.1. : spawn /bin/echo "$(date) Conexão Liberada - SSH - IP %a" >> /var/log/allow-ssh.log
+#sshd: 172.16.1.0/255.255.255.0: spawn /bin/echo "$(date) Conexão Liberada - SSH - IP %a" >> /var/log/allow-ssh.log
+#sshd: 172.16.1.0/24: spawn /bin/echo "$(date) Conexão Liberada - SSH - IP %a" >> /var/log/allow-ssh.log
+#sshd: *.pti.intra: spawn /bin/echo "$(date) Conexão Liberada - SSH - IP %a" >> /var/log/allow-ssh.log
+#sshd: 172.16.1. EXCEPT 172.16.1.11: spawn /bin/echo "$(date) Conexão Liberada - SSH - IP %a" >> /var/log/allow-ssh.log
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+hosts.deny:
+
+(Bloqueio padrão + registro de bloqueio):
+
+A linha ativa ALL: ALL: spawn ... >> /var/log/deny.log bloqueia qualquer serviço (ALL) para qualquer cliente (ALL) que não tenha sido explicitamente liberado antes no hosts.allow, e executa um comando shell (spawn) para gravar os detalhes da tentativa no arquivo /var/log/deny.log.
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Autor: Robson Vaamonde
+# Procedimentos em TI: http://procedimentosemti.com.br
+# Bora para Prática: http://boraparapratica.com.br
+# Robson Vaamonde: http://vaamonde.com.br
+# Facebook Procedimentos em TI: https://www.facebook.com/ProcedimentosEmTi
+# Facebook Bora para Prática: https://www.facebook.com/BoraParaPratica
+# Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem
+# YouTube Bora Para Prática: https://www.youtube.com/boraparapratica
+# Data de criação: 29/09/2026
+# Data de atualização: 29/09/2026
+# Versão: 0.01
+# Testado e homologado para a versão do Ubuntu Server 26.04.x LTS x64
+#
+# Comando utilizado para verificar se o serviço (daemon) de rede tem suporte ao
+# TCPWrappers: ldd /usr/sbin/sshd | grep libwrap (Biblioteca LibWrap), o OpenSSH
+# tem suporte nativo a biblioteca do TCPWrappers, garantindo a sua segurança sem
+# utilizar regras de Firewall (iptables ou ufw).
+#
+# Logando todas as informações de acesso nos arquivos de Log's de cada serviço
+# em: /var/log/deny.log.
+#
+# Opções de configuração do Hosts Deny: Daemon (serviço de rede), Client (cliente
+# que vai acessar o serviço), Shell Command (comando que será executado depois que
+# acessar o serviço)
+#
+# Opções das variáveis do Hosts Allow: date -u (--universal), %d (The daemon process name),
+# %R (The servers port number), %A (The server host address), %N (The server host name),
+# %c (Client information), %r (The clients port number), %p (The daemon process id)
+#
+#==================== BLOCO DE CONFIGURAÇÃO DA NEGAÇÃO DOS DAEMON ====================
+#
+# Negando todas as Redes de acessar remotamente os serviços no Servidor Ubuntu
+# DAEMON    CLIENT    SHELL COMMAND
+ALL: ALL: spawn /bin/echo "$(date -u) | Serviço Local %d | Porta Local %R | Host Local %A | Hostname %N | Host Remoto %c | Porta Remota %r | Processo Local %p" >> /var/log/deny.log
+#
+# Exemplos de configuração do TCPWrappers do arquivo hosts.deny:
+# Negando uma Sub-Rede ou nome de domínio FQDN para um serviço
+# DAEMON    CLIENT    SHELL COMMAND
+#sshd: 172.16.1. : spawn /bin/echo "$(date) Conexão Recusada - SSH - IP %a" >> /var/log/deny.log
+#sshd: 172.16.1.0/255.255.255.0: spawn /bin/echo "$(date) Conexão Recusada - SSH - IP %a" >> /var/log/deny.logg
+#sshd: *.pti.intra: spawn /bin/echo "$(date) Conexão Recusada - SSH - IP %a" >> /var/log/deny.log
+#sshd: 172.16.1. EXCEPT 172.16.1.11: spawn /bin/echo "$(date) Conexão Recusada - SSH - IP %a" >> /var/log/deny.log
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+

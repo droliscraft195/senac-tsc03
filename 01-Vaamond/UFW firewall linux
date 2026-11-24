@@ -1,0 +1,95 @@
+# ================================================================================
+DOCUMENTAÇÃO DE CONFIGURAÇÃO DO FIREWALL (UFW)
+
+## INTRODUÇÃO AO UFW
+
+O UFW (Uncomplicated Firewall) é a interface padrão de gerenciamento de firewall
+no Ubuntu, projetada para simplificar a configuração das regras de filtragem de
+pacotes do kernel Linux (iptables/nftables). Ele opera como um firewall stateful
+(com inspeção de estado), permitindo controlar de forma granular o tráfego de
+entrada (incoming), saída (outgoing) e roteamento (routed), aplicando políticas
+de segurança baseadas em portas, protocolos, interfaces de rede e endereços IP.
+
+================================================================================
+
+1. POLÍTICAS PADRÃO E AUDITORIA (LOGS)
+================================================================================
+Foi adotada a abordagem de bloqueio total por padrão (Whitelist / Zero Trust),
+negando qualquer tráfego não autorizado explicitamente e elevando o nível de
+registro de eventos para auditoria.
+
+* sudo ufw default deny incoming
+-> Bloqueia todo o tráfego de entrada por padrão.
+* sudo ufw default deny outgoing
+-> Bloqueia todo o tráfego de saída por padrão.
+* sudo ufw default deny routed
+-> Bloqueia o encaminhamento/roteamento de pacotes entre interfaces de rede.
+* sudo ufw logging on
+-> Ativa o serviço de geração de logs do firewall (em /var/log/ufw.log).
+* sudo ufw logging medium
+-> Define o nível de detalhamento dos logs como médio, registrando pacotes
+bloqueados, conexões novas e pacotes inválidos.
+
+# ================================================================================
+2. LIBERAÇÃO DA INTERFACE INTERNA (LOOPBACK)
+
+Para garantir o funcionamento adequado dos processos internos e serviços locais
+do próprio sistema operacional, foi liberada a comunicação na interface lo.
+
+* sudo ufw allow in on lo
+-> Libera o tráfego de entrada na interface de loopback.
+* sudo ufw allow out on lo
+-> Libera o tráfego de saída na interface de loopback.
+
+# ================================================================================
+3. REGRAS DE SAÍDA (OUTGOING) NA INTERFACE PRINCIPAL (enp0s3)
+
+Com a saída bloqueada por padrão, foram criadas exceções específicas a partir
+do IP do servidor (10.24.86.215) pela placa de rede enp0s3 para serviços
+essenciais de rede e atualização.
+
+* sudo ufw allow out on enp0s3 from 10.24.86.215 to any port 53 proto udp comment 'Liberando a saida para consulta do DNS'
+-> Libera a saída de consultas DNS (porta 53/UDP) para resolução de nomes
+de domínio.
+* sudo ufw allow out on enp0s3 from 10.24.86.215 to any port 80 proto tcp comment 'Liberando a saida para navegacao do HTTP v4'
+-> Libera a saída de tráfego web HTTP (porta 80/TCP).
+* sudo ufw allow out on enp0s3 from 10.24.86.215 to any port 443 proto tcp comment 'Liberando a saida para navegacao do HTTPS v4'
+-> Libera a saída de tráfego web seguro HTTPS (porta 443/TCP) para navegação
+criptografada e download de pacotes.
+* sudo ufw allow out on enp0s3 from 10.24.86.215 to any port 123 proto udp comment 'Liberando a saida para sincronismo do NTP v4'
+-> Libera a saída do protocolo NTP (porta 123/UDP) para sincronização
+automática do relógio do servidor.
+[Nota: na execução inicial foi utilizada a porta 126, sendo a porta
+oficial do NTP a 123].
+
+# ================================================================================
+4. REGRAS DE ENTRADA (INCOMING) E CONTROLE DE ACESSO REMOTO
+
+Para permitir a administração remota segura do servidor pela rede local sem
+expor o serviço a ataques de força bruta, foi aplicada uma regra com limitação
+de taxa (rate limiting) e registro completo.
+
+* sudo ufw limit in on enp0s3 log-all from 10.24.86.0/24 to 10.24.86.215 port 22 proto tcp comment 'Liberando a entrada do acesso remoto via SSH v4'
+-> Libera a entrada de conexões SSH (porta 22/TCP) exclusivamente a partir
+da sub-rede local 10.24.86.0/24 com destino ao servidor (10.24.86.215),
+bloqueando automaticamente IPs que tentarem 6 ou mais conexões em menos
+de 30 segundos e registrando todos os pacotes no log.
+
+# ================================================================================
+5. COMANDOS DE VERIFICAÇÃO E DIAGNÓSTICO
+
+Utilizados ao longo da configuração para auditar as regras aplicadas e
+identificar as interfaces de rede disponíveis.
+
+* sudo ufw status verbose
+-> Exibe o estado atual do firewall, políticas padrão, nível de log e todas
+as regras ativas com seus respectivos comentários.
+* sudo ufw status numbered
+-> Lista todas as regras ativas numeradas sequencialmente para facilitar a
+organização ou exclusão pontual.
+* sudo ip address show
+-> Lista as interfaces de rede do servidor (como lo e enp0s3) e seus
+respectivos endereços IP.
+
+================================================================================
+
